@@ -1,0 +1,36 @@
+---
+- name: Set up web servers
+  hosts: all
+  become: yes
+  tasks:
+    - name: Install Apache on RHEL systems
+      dnf:
+        name: httpd
+        state: present
+      when: ansible_facts['distribution'] == "RedHat"
+    - name: Install Apache on Debian systems
+      apt:
+        name: apache2
+        state: present
+      when: ansible_facts.distribution == "Debian"
+    - name: Start/Enable Apache
+      systemd:
+        name: "{{ web_service_name }}"
+        state: started
+        enabled: true
+    - name: Deploy Web Content
+      template:
+        src: index.htm.j2
+        dest: /var/www/html/index.htm
+        owner: "{{ web_user_name }}"
+        group: "{{ web_user_name }}"
+    - name: Move web content into the correct location
+      copy:
+        src: /var/www/html/index.htm
+        remote_src: yes
+        dest: /var/www/html/index.html
+    - name: Remove the incorrectly-named web content
+      file:
+        path: /var/www/html/index.htm
+        state: absent
+...
