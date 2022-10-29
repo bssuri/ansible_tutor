@@ -1,0 +1,21 @@
+---
+all:
+  vars:
+    server_age: "old"
+  children:
+    rhel9:
+      vars:
+        web_service_name: "httpd"
+        web_user_name: "apache"
+      hosts:
+        rhel9-vm1:
+        rhel9-vm2:
+          server_age: "new"
+    debian11:
+      vars:
+        web_service_name: "apache2"
+        web_user_name: "www-data"  
+      hosts:
+        debian11-vm1:
+        debian11-vm2:
+...
