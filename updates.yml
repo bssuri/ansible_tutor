@@ -1,0 +1,18 @@
+---
+- name: Update Debian Servers
+  hosts: debian11
+  become: yes
+  tasks:
+    - apt: 
+        update_cache: yes
+        upgrade: full
+        autoremove: yes
+- name: Update RHEL Servers
+  hosts: rhel9
+  become: yes
+  tasks:
+    - dnf:
+        update_cache: yes
+        name: "*"
+        state: latest
+...
