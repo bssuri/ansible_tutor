@@ -1,0 +1,16 @@
+---
+- name: Install Apache package on rhel9 & debian11
+  hosts: all
+  become: true
+  tasks:
+
+  - name: Install Apache2 package on debian11
+    apt: 
+      name: apache2
+    when: ansible_facts['distribution'] == "Debian"
+
+  - name: Install httpd package on rhel9
+    dnf:
+      name: httpd
+    when: ansible_facts.distribution == "RedHat"
+...
