@@ -1,0 +1,7 @@
+[rhel9]
+rhel9-vm1
+rhel9-vm2
+
+[debian11]
+debian11-vm1
+debian11-vm2
