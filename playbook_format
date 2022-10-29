@@ -1,0 +1,13 @@
+---
+- playbook
+  - play
+    - task 
+      - modules
+    - task
+      - modules
+  - play
+    - task
+      - modules
+    - task
+      - modules
+...
