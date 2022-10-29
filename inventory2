@@ -1,9 +1,12 @@
 ---
 all:
-  hosts:
-    rhel9-vm1:
-    rhel9-vm2:
-    debian11-vm1:
-    debian11-vm2:
+  children:
+    rhel9:
+      hosts:
+        rhel9-vm1:
+        rhel9-vm2:
+    debian11:
+      hosts:
+        debian11-vm1:
+        debian11-vm2:
 ...
-
