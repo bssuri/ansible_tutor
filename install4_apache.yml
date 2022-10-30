@@ -1,0 +1,28 @@
+---
+- name: Repository update & Install/Start/Enable Apache on rhel9 & debian11 with PHP support
+  hosts: all
+  become: true
+  tasks:
+
+  - name: Install Apache+PHP packages & repository update
+    package: 
+      name: 
+        - "{{ apache_package }}"
+        - "{{ php_package }}"  
+      state: latest
+      update_cache: yes  
+
+  - name: Start/Enable Apache on rhel9
+    service:
+      name: httpd 
+      state: started
+      enabled: true
+    when: ansible_distribution == "RedHat"
+      
+  - name: Start/Enable Apache on debian11
+    service:
+      name: apache2
+      state: started
+      enabled: true
+    when: ansible_distribution == "Debian"
+...
