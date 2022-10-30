@@ -1,9 +1,19 @@
 ---
-- name: Install Apache package on rhel9 & debian11
+- name: Repository update & Install/Start/Enable Apache on rhel9 & debian11
   hosts: all
   become: true
   tasks:
 
+  - name: Update repository index on debian11
+    apt:  
+      update_cache: yes
+    when: ansible_facts['distribution'] == "Debian"
+
+  - name: Update repository index on rhel9
+    dnf:  
+      update_cache: yes
+    when: ansible_facts.distribution == "RedHat"
+ 
   - name: Install Apache2 package on debian11
     apt: 
       name: apache2
