@@ -1,0 +1,24 @@
+---
+- name: Removing Apache on rhel9 & debian11 and also removing the PHP support on debian11
+  hosts: all
+  become: true
+  tasks:
+
+  - name: Remove Apache2 package on debian11
+    apt: 
+      name: apache2
+      state: absent
+    when: ansible_facts['distribution'] == "Debian"
+
+  - name: Remove httpd package on rhel9
+    dnf:
+      name: httpd
+      state: absent
+    when: ansible_facts.distribution == "RedHat"
+
+  - name: Remove PHP Support for Apache on debian11
+    apt: 
+      name: libapache2-mod-php
+      state: absent
+    when: ansible_facts['distribution'] == "Debian"
+...
