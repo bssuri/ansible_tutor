@@ -1,33 +1,7 @@
----
-all:
-  children:
-    centos:
-      hosts:
-        centos1:
-	centos2:
-    debian:
-      hosts:
-        debian1:
-	debian2:
-      children:
-        ubuntu:
-          hosts:
-            ubuntu1:
-	    ubuntu2:
+[rhel9]
+rhel9-vm1      apache_package=httpd php_package=php 
+rhel9-vm2      apache_package=httpd php_package=php
 
-
-
-[ubuntu]
-ubuntu1
-ubuntu2
-
-[centos]
-centos1
-centos2
-
-[debian]
-debian1
-debian2
-
-[debian:children]
-ubuntu
+[debian11]
+debian11-vm1   apache_package=apache2 php_package=libapache2-mod-php 
+debian11-vm2   apache_package=apache2 php_package=libapache2-mod-php 
