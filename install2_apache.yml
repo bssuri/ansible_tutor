@@ -1,0 +1,48 @@
+---
+- name: Repository update & Install/Start/Enable Apache on rhel9 & debian11 with PHP support on debian11
+  hosts: all
+  become: true
+  tasks:
+
+  - name: Update repository index on debian11
+    apt:  
+      update_cache: yes
+    when: ansible_distribution in ["Debian", "Ubuntu"]
+
+  - name: Update repository index on rhel9
+    dnf:  
+      update_cache: yes
+    when: ansible_distribution in ["RedHat", "CentOS"]
+ 
+  - name: Install Apache2 package on debian11
+    apt: 
+      name: apache2
+      state: latest
+    when: ansible_distribution in ["Debian", "Ubuntu"]
+
+  - name: Install httpd package on rhel9
+    dnf:
+      name: httpd
+      state: latest  
+    when: ansible_distribution in ["RedHat", "CentOS"]
+
+  - name: Install PHP Support for Apache on debian11
+    apt: 
+      name: libapache2-mod-php
+      state: latest
+    when: ansible_distribution in ["Debian", "Ubuntu"]
+
+  - name: Start/Enable Apache2 on debian11
+    service:
+      name: apache2
+      state: started
+      enabled: true
+    when: ansible_distribution in ["Debian", "Ubuntu"]
+
+  - name: Start/Enable Apache on rhel9
+    service:
+      name: httpd
+      state: started
+      enabled: true
+    when: ansible_distribution in ["RedHat", "CentOS"]
+...
