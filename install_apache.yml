@@ -13,4 +13,18 @@
     dnf:
       name: httpd
     when: ansible_facts.distribution == "RedHat"
+
+  - name: Start/Enable Apache2 on debian11
+    service:
+      name: apache2
+      state: started
+      enabled: true
+    when: ansible_facts['distribution'] == "Debian"
+
+  - name: Start/Enable Apache on rhel9
+    service:
+      name: httpd
+      state: started
+      enabled: true
+    when: ansible_facts.distribution == "RedHat"
 ...
