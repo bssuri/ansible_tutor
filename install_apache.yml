@@ -1,5 +1,5 @@
 ---
-- name: Repository update & Install/Start/Enable Apache on rhel9 & debian11 with PHP support on debian11
+- name: Repository update & Install/Start/Enable Apache on rhel9 & debian11 with PHP support
   hosts: all
   become: true
   tasks:
@@ -28,6 +28,11 @@
     apt: 
       name: libapache2-mod-php
     when: ansible_facts['distribution'] == "Debian"
+
+  - name: Install PHP Support for Apache on rhel9
+    dnf: 
+      name: php
+    when: ansible_facts['distribution'] == "RedHat"
 
   - name: Start/Enable Apache2 on debian11
     service:
