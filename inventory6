@@ -1,0 +1,12 @@
+[web_servers]
+rhel9-vm1
+debian11-vm1
+
+[db_servers]
+rhel9-vm2
+
+[file_servers]
+debian11-vm2
+
+[workstations]
+rhel9-vm3
