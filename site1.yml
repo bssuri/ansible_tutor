@@ -1,0 +1,73 @@
+---
+- name: Repository update & Install/Start/Enable Apache with PHP support
+  hosts: all
+  become: true
+  pre_tasks:
+
+
+  - name: Install Updates on rhel9
+    tags: always
+    dnf:
+      update_only: yes
+      update_cache: yes
+    when: ansible_distribution == "RedHat"
+ 
+  - name: Install Updates on debian11
+    tags: always
+    apt:
+      upgrade: dist
+      update_cache: yes
+    when: ansible_distribution == "Debian"
+
+
+- hosts: web_servers
+  become: true
+  tasks: 
+
+  - name: Install Apache & PHP on debian11
+    tags: apache,apache2,debian
+    apt: 
+      name: 
+        - apache2
+        - libapache2-mod-php  
+      state: latest
+    when: ansible_distribution == "Debian"
+
+  - name: Install Apache & PHP on rhel9
+    tags: apache,rehat,httpd
+    dnf:
+      name:
+        - httpd
+        - php
+      state: latest  
+    when: ansible_distribution == "RedHat"
+
+
+- hosts: db_servers
+  become: true
+  tasks:
+
+  - name: Install mariadb package on rhel9
+    tags: redhat,db,mariadb
+    dnf:
+      name: mariadb
+      state: latest
+    when: ansible_distribution == "RedHat"  
+
+  - name: Install mariadb package on debian11
+    tags: db,mariadb,debian
+    apt:
+      name: mariadb-server
+      state: latest
+    when: ansible_distribution == "Debian"  
+
+- hosts: file_servers
+  become: true
+  tasks:
+
+  - name: Install samba package
+    tags: samba
+    package:
+      name: samba
+      state: latest
+...
